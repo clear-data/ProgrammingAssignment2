@@ -1,36 +1,42 @@
-## Put comments here that give an overall description of what your
-## functions do
-## makeCasheMatrix and cacheSolve
-## Functions do the following ...
+## cachematrix.R
+## Functions makeFunctionVector and cacheSolve work together to create
+## a mechanism to retrieve the cached results of a matrix inversion, if the
+## results already exist.  If not, the matrix inversion will be calculated
+## and returned.
+##  
+## Program assumes input matrix x is a square invertable matrix
 
-## Write a short comment describing this function
+## makeCacheMatrix creates a list of functions which can be called individually
+## to set or get the values of the initial matrix or its inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
-        inverseV <- NULL
+        inv <- NULL
         set <- function(y) {
                 x <<- y
-                inverseV <<- NULL
+                inv <<- NULL
         }
         get <-function() x
-        setinverse <- function(inverseF) inverseS <<- inverseF
-        getinverse <- function() inverseV
+        setinverse <- function(inverse) inv <<- inverse
+        getinverse <- function() inv
         list(set = set, get = get,
              setinverse = setinverse,
              getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## cacheSolve returns the cached value of the matrix "inverse" if it exists
+## if the value doesn't exist, cacheSolve does the inversion calculation using
+## the R function solve.
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-        inverseV <- x$getinverse()
-        if(!is.null(inverseV)) {
+        inv <- x$getinverse()
+        if(!is.null(inv)) {
                 message("getting cached data")
-                return(inverseV)
+                return(inv)
         }
         data <- x$get()
-        inverseV <--inverseF(data, ...)
-        x$setinverse(inverseV)
-        inverseV
+        inverse <--solve(data, ...)
+        x$setinverse(inv)
+        inv
 }
